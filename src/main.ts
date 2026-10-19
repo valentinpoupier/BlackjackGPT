@@ -53,7 +53,7 @@ app.innerHTML = `
     </div>
     <div class="arena">
       <aside>
-        <img id="selena-portrait" src="/selena-casino.png" alt="${t.confident}" data-expression="confident">
+        <img id="selena-portrait" src="./selena-casino.png" alt="${t.confident}" data-expression="confident">
         <div class="identity">
           <span class="live">
             ${t.online}
@@ -535,4 +535,3 @@ getButton('reset').onclick = () => {
     }
 };
 updateInterface();
-
