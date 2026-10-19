@@ -10,13 +10,47 @@ export function detectLanguage(preferences: readonly string[]): Language {
     return 'en';
 }
 
+export function resolveLanguage(
+    preferences: readonly string[],
+    savedChoice?: string | null,
+    linkChoice?: string | null,
+): Language {
+    if (linkChoice === 'fr' || linkChoice === 'en') return linkChoice;
+    if (savedChoice === 'fr' || savedChoice === 'en') return savedChoice;
+    return detectLanguage(preferences);
+}
+
+function readSavedLanguage(): string | null {
+    try {
+        return localStorage.getItem('debilus-language');
+    } catch {
+        return null;
+    }
+}
+
+function readLinkLanguage(): string | null {
+    return typeof location === 'undefined'
+        ? null
+        : new URLSearchParams(location.search).get('lang');
+}
+
+export function saveLanguagePreference(choice: Language): void {
+    try {
+        localStorage.setItem('debilus-language', choice);
+    } catch {
+        // Le paramètre du lien permet de changer de langue même sans stockage local.
+    }
+}
+
 const preferences = typeof navigator === 'undefined'
     ? []
     : navigator.languages?.length ? navigator.languages : [navigator.language];
-export const language = detectLanguage(preferences);
+export const language = resolveLanguage(preferences, readSavedLanguage(), readLinkLanguage());
 export const locale = language === 'fr' ? 'fr-FR' : 'en-GB';
 
 export const fr = {
+    "languageLabel": "Langue de l’application",
+    "languageHint": "Termine la manche avant de changer de langue.",
     "privateClub": "CLUB PRIVÉ DEBILUS",
     "motto": "PAS D’ARGENT. JUSTE DU CARACTÈRE.",
     "offline": "LOCAL / HORS LIGNE",
@@ -87,6 +121,8 @@ export const fr = {
 };
 
 export const en: Record<keyof typeof fr, string> = {
+    "languageLabel": "Application language",
+    "languageHint": "Finish the round before changing language.",
     "privateClub": "DEBILUS PRIVATE CLUB",
     "motto": "NO CASH. JUST ATTITUDE.",
     "offline": "LOCAL / OFFLINE",
