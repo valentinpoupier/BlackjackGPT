@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Blackjack Debilus</title>
+  <rect width="64" height="64" rx="15" fill="#101917"/>
+  <circle cx="32" cy="34" r="24" fill="#233e32" stroke="#e8c381" stroke-width="3"/>
+  <path d="m13 23 1-16 15 9m6 0L50 7l1 16" fill="#933c3d" stroke="#e8c381" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M23 22h9c10 0 16 5 16 13S42 49 32 49h-9V22Zm7 6v15h2c6 0 9-3 9-8s-3-7-9-7h-2Z" fill="#e8c381"/>
+  <path d="m17 33 4 2-4 2-4-2Z" fill="#a8ce99"/>
+</svg>
