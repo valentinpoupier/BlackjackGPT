@@ -28,3 +28,254 @@
         font-size: 11px;
     }
 }
+
+/* Dimensions communes : le contenu des cartes ne dépend plus de leur hauteur. */
+.card {
+    width: clamp(52px, 6vw, 64px);
+    height: auto;
+    aspect-ratio: 61 / 87;
+    isolation: isolate;
+}
+.card-front {
+    display: block;
+    padding: 0;
+}
+.card-front b {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+    font-size: 13px;
+    line-height: 1;
+}
+.card-front b:last-child {
+    top: auto;
+    left: auto;
+    right: 5px;
+    bottom: 5px;
+    transform: rotate(180deg);
+}
+.card-front small {
+    font-size: 10px;
+    line-height: 1;
+    margin-top: 2px;
+}
+.card-front > span {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    line-height: 1;
+}
+.hand {
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    gap: 10px 8px;
+    padding: 12px 0;
+}
+.hand-area, .bet-panel, .actions, .metrics > div {
+    min-width: 0;
+}
+.table {
+    min-height: 490px;
+}
+.table-top {
+    flex-shrink: 0;
+    height: 78px;
+}
+#shoe {
+    flex-shrink: 0;
+}
+.table-mark {
+    margin: 16px 0;
+}
+.player-area {
+    margin-top: 0;
+}
+#status {
+    margin-top: auto;
+    padding-top: 12px;
+    overflow-wrap: anywhere;
+}
+.controls {
+    flex-wrap: wrap;
+}
+.actions {
+    flex-wrap: wrap;
+}
+.actions button {
+    min-height: 44px;
+}
+.history-row, article, blockquote {
+    overflow-wrap: anywhere;
+}
+
+/* L’en-tête passe sur deux lignes avant que les commandes ne se compriment. */
+@media (max-width: 1100px) {
+    header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: 12px 18px;
+        height: auto;
+        padding: 18px 5%;
+    }
+    header nav {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: center;
+        width: 100%;
+    }
+    .brand {
+        font-size: 11px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+    .wallet {
+        font-size: 13px;
+    }
+}
+
+/* Table pleine largeur sur tablette et téléphone, y compris en portrait. */
+@media (max-width: 860px) {
+    .arena {
+        display: flex;
+        flex-direction: column;
+    }
+    aside {
+        display: block;
+        height: auto;
+        min-height: 132px;
+        padding: 18px 22px 18px 140px;
+    }
+    aside img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 120px;
+        height: 100%;
+        object-position: 50% 24%;
+        mask-image: linear-gradient(90deg, #000 75%, transparent);
+    }
+    .identity {
+        display: none;
+    }
+    blockquote {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.5;
+    }
+    .table {
+        padding: 20px 22px 16px;
+        min-height: 460px;
+    }
+    .table-top > span {
+        max-width: 65%;
+        line-height: 1.6;
+    }
+    .card {
+        width: clamp(50px, 10vw, 64px);
+    }
+    .controls {
+        justify-content: center;
+    }
+    .bet-panel {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0;
+    }
+    .actions {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        width: 100%;
+        gap: 8px;
+    }
+    .actions button {
+        padding: 14px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        gap: 10px;
+        padding: 14px 4%;
+    }
+    .brand {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+    .wallet {
+        font-size: 12px;
+    }
+    .wallet small {
+        display: block;
+        text-align: right;
+    }
+    .language-select {
+        max-width: 95px;
+    }
+    main {
+        padding: 22px 4%;
+    }
+    h1 {
+        font-size: clamp(28px, 8vw, 36px);
+    }
+    .eyebrow {
+        letter-spacing: 2px;
+        line-height: 1.7;
+    }
+    aside {
+        min-height: 120px;
+        padding: 16px 16px 16px 108px;
+    }
+    aside img {
+        width: 96px;
+    }
+    blockquote {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .table {
+        padding: 18px 14px 14px;
+        min-height: 430px;
+    }
+    .table:before {
+        inset: 10px;
+    }
+    .hand {
+        gap: 10px 5px;
+        min-height: 100px;
+    }
+    .card {
+        width: clamp(48px, 13vw, 58px);
+    }
+    .table-mark strong {
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
+    .table-mark small {
+        font-size: 6px;
+        letter-spacing: 1px;
+    }
+    .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .actions button {
+        font-size: 12px;
+    }
+    .metrics {
+        gap: 10px;
+    }
+    .metrics > div {
+        padding: 18px 12px;
+    }
+    .metrics strong {
+        font-size: 28px;
+        overflow-wrap: anywhere;
+    }
+    footer {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+}
