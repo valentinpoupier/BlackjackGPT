@@ -15,6 +15,13 @@ le navigateur ; celles de `localhost` ne sont pas transférées au site héberg�
 
 ## Langues
 
+Le sélecteur **Français / English** dans l’en-tête permet de choisir la langue
+si Chrome ou le téléphone annonce une autre préférence. Ce choix est mémorisé
+sur l’appareil, séparément du solde et des statistiques. Il est verrouillé pendant
+une manche. Les liens `?lang=fr` et `?lang=en` imposent aussi la langue à l’ouverture,
+même si le stockage local est indisponible. Priorité : lien explicite, choix mémorisé,
+puis détection automatique décrite ci-dessous.
+
 L’application sélectionne au chargement la première langue prise en charge dans
 `navigator.languages` (ou `navigator.language` si la liste est vide) : français
 pour `fr`, `fr-BE`, `fr-CA`, etc., anglais pour `en`, `en-US`, etc. Si aucune
