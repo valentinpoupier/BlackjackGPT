@@ -1,5 +1,18 @@
 # Blackjack Debilus
 
+## GitHub Pages
+
+Le workflow `.github/workflows/deploy.yml` teste, compile et publie `dist/` à
+chaque push sur `main`. Dans **Settings → Pages → Build and deployment**, choisir
+**GitHub Actions** comme source. Un lancement manuel est aussi disponible dans
+**Actions → Deploy BlackjackGPT to GitHub Pages → Run workflow**.
+
+Adresse prévue : https://valentinpoupier.github.io/BlackjackGPT/
+
+Les chemins relatifs configurés dans `vite.config.js` permettent de charger
+les portraits et le favicon depuis ce sous-dossier. Les sauvegardes restent dans
+le navigateur ; celles de `localhost` ne sont pas transférées au site hébergé.
+
 ## Langues
 
 L’application sélectionne au chargement la première langue prise en charge dans
