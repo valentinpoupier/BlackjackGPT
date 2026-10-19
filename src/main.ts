@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import './style.css';
-import { language, locale, t, streakReply, formatHistoryDate } from './i18n.ts';
+import { language, locale, t, streakReply, formatHistoryDate, saveLanguagePreference } from './i18n.ts';
 import { dialogue } from './selena-dialogue.ts';
 import { score, natural, shoe, outcome, payout, ranks, type Card } from './engine.ts';
 import { load, persist, fresh, type Save } from './storage.ts';
@@ -28,6 +28,10 @@ app.innerHTML = `
       ${t.rules}
     </button>
   </nav>
+  <select id="language" class="language-select" aria-label="${t.languageLabel}">
+    <option value="fr" lang="fr" ${language === 'fr' ? 'selected' : ''}>Français</option>
+    <option value="en" lang="en" ${language === 'en' ? 'selected' : ''}>English</option>
+  </select>
   <div class="wallet">
     ◉ 
     <strong id="balance">
@@ -261,6 +265,9 @@ function updateInterface() {
     const hiddenCardIndicator = dealerCardRevealed ? '' : ' + ?';
     const actionsDisabled = !roundInProgress || animationInProgress;
     const bettingDisabled = roundInProgress || animationInProgress;
+    const languageSelect = getElement('language') as HTMLSelectElement;
+    languageSelect.disabled = bettingDisabled;
+    languageSelect.title = bettingDisabled ? t.languageHint : t.languageLabel;
 
     getElement('balance').textContent = formatPoints(progress.balance);
     getElement('remaining').textContent = `${formatPoints(deck.length)} ${t.cards}`;
@@ -534,4 +541,16 @@ getButton('reset').onclick = () => {
         updateInterface();
     }
 };
+// Le rechargement applique la langue à tous les textes et aux portraits.
+// Le sélecteur est verrouillé pendant une manche pour ne perdre aucune mise.
+(getElement('language') as HTMLSelectElement).onchange = (event) => {
+    if (roundInProgress || animationInProgress) return;
+    const choice = (event.currentTarget as HTMLSelectElement).value;
+    if (choice !== 'fr' && choice !== 'en') return;
+    saveLanguagePreference(choice);
+    const url = new URL(location.href);
+    url.searchParams.set('lang', choice);
+    location.assign(url.href);
+};
+
 updateInterface();
