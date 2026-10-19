@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { detectLanguage, fr, en, formatHistoryDate } from './i18n.ts';
+import { detectLanguage, resolveLanguage, saveLanguagePreference, fr, en, formatHistoryDate } from './i18n.ts';
 import { dialogue } from './selena-dialogue.ts';
 
 test('French regional preferences select French', () => {
@@ -22,6 +22,37 @@ test('the first supported preference wins, with English as fallback', () => {
     assert.equal(detectLanguage(['de-DE', 'ja-JP']), 'en');
     assert.equal(detectLanguage([]), 'en');
     assert.equal(detectLanguage(['french', 'enough']), 'en');
+});
+
+test('an explicit choice overrides the browser, while invalid choices are ignored', () => {
+    assert.equal(resolveLanguage(['en-US'], 'fr'), 'fr');
+    assert.equal(resolveLanguage(['fr-BE'], 'en'), 'en');
+    assert.equal(resolveLanguage(['en-US'], 'en', 'fr'), 'fr');
+    assert.equal(resolveLanguage(['fr-BE'], 'de', 'invalid'), 'fr');
+    assert.equal(resolveLanguage(['en-US'], null, null), 'en');
+});
+
+test('the chosen language is saved separately from game progress and storage failures are tolerated', () => {
+    const originalStorage = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+    const values = new Map([['debilus-v1', 'existing progress']]);
+    try {
+        Object.defineProperty(globalThis, 'localStorage', {
+            configurable: true,
+            value: { setItem: (key: string, value: string) => values.set(key, value) },
+        });
+        saveLanguagePreference('fr');
+        assert.equal(values.get('debilus-language'), 'fr');
+        assert.equal(values.get('debilus-v1'), 'existing progress');
+
+        Object.defineProperty(globalThis, 'localStorage', {
+            configurable: true,
+            get: () => { throw new Error('Storage blocked'); },
+        });
+        assert.doesNotThrow(() => saveLanguagePreference('en'));
+    } finally {
+        if (originalStorage) Object.defineProperty(globalThis, 'localStorage', originalStorage);
+        else Reflect.deleteProperty(globalThis, 'localStorage');
+    }
 });
 
 test('both languages have complete nonempty interface and dialogue translations', () => {
