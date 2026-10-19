@@ -3,23 +3,23 @@ import { t } from './i18n.ts';
 // Les réactions appartiennent uniquement à l'interface : elles ne changent aucune règle.
 export const portraits = {
     confident: {
-        src: '/selena-casino.png',
+        src: './selena-casino.png',
         description: t.confident,
     },
     smug: {
-        src: '/selena-smug.png',
+        src: './selena-smug.png',
         description: t.smug,
     },
     annoyed: {
-        src: '/selena-annoyed.png',
+        src: './selena-annoyed.png',
         description: t.annoyed,
     },
     surprised: {
-        src: '/selena-surprised.png',
+        src: './selena-surprised.png',
         description: t.surprised,
     },
     unimpressed: {
-        src: '/selena-unimpressed.png',
+        src: './selena-unimpressed.png',
         description: t.unimpressed,
     },
 } as const;
